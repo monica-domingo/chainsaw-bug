@@ -1,84 +1,62 @@
-# Turborepo starter
+# 🪓🐛 chainsawn-bug
 
-This Turborepo starter is maintained by the Turborepo core team.
+**chainsawn-bug** is a frontend playground monorepo managed with **[Turborepo](https://turbo.build/repo)**. It’s a personal space to test different frontend frameworks, libraries, and UI toolkits — each project themed after a bug 🐞.
 
-## Using this example
+Whether it's trying out a new UI system or comparing frameworks, this repo helps keep everything tidy and modular.
 
-Run the following command:
+## 🐞 Existing Projects
 
-```sh
-npx create-turbo@latest
+* **🐝 `bee/`** – An [Electron](https://www.electronjs.org/) app for desktop frontend experiments.
+* **🪰 `fly/`** – A [Bun](https://bun.sh/) + [Vite](https://vitejs.dev/) setup for testing [Radix UI](https://www.radix-ui.com/) with React.
+* **🦂 `wasp/`** – Same as `fly`, but using **Preact** instead of React.
+
+> All projects are frontend-only and focused on UI experimentation.
+
+## 🚀 Getting Started
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/yourusername/chainsawn-bug.git
+cd chainsawn-bug
 ```
 
-## What's inside?
+2. Install dependencies (with [Bun](https://bun.sh/)):
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+```bash
+bun install
 ```
 
-### Develop
+3. Run a specific project:
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```bash
+bun turbo run dev --filter=bee
+bun turbo run dev --filter=fly
+bun turbo run dev --filter=wasp
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+> Requires **Node.js ≥18** and **Bun v1.2.3** or higher.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## 🗂 Repo Structure
 
 ```
-npx turbo link
+chainsawn-bug/
+├── apps/
+│   ├── bee/       # Electron-based app
+│   ├── fly/       # Bun + Vite + React + Radix UI
+│   └── wasp/      # Bun + Vite + Preact
+├── packages/      # (shared code may live here in the future)
+├── turbo.json
+├── bun.lockb
+└── README.md
 ```
 
-## Useful Links
+## 🔮 Coming Soon
 
-Learn more about the power of Turborepo:
+More bug-themed frontend setups are on the way. 
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## 🧪 Purpose
+
+* Explore new libraries and frameworks in isolation
+* Compare setups with minimal config overhead
+* Centralized and fast iteration using Bun + Turborepo
