@@ -1,7 +1,4 @@
-# Bee App - React + TypeScript + Vite
-
-This is the README for the Bee app. 
-**TODO: Add specific details about the Bee app's functionality and purpose.**
+# Wasp App - React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

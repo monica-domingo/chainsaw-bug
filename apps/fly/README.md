@@ -1,4 +1,7 @@
-# React + TypeScript + Vite
+# Fly App - React + TypeScript + Vite
+
+This is the README for the Fly app.
+**TODO: Add specific details about the Fly app's functionality and purpose.**
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

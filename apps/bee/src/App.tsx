@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import './App.css'
+import './App.css';
+import TitleBar from './components/TitleBar';
+import SystemInfoDisplay from './components/SystemInfoDisplay';
+import InteractiveSection from './components/InteractiveSection';
+import AppFooter from './components/AppFooter';
+
 const { ipcRenderer } = window.require ? window.require('electron') : { ipcRenderer: mockIpcRenderer() };
 
 function mockIpcRenderer() {
@@ -20,7 +25,6 @@ interface SystemInfo {
     memory: number;
     electronVersion: string;
 }
-
 
 function App() {
     const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null);
@@ -66,66 +70,38 @@ function App() {
         document.body.className = !darkMode ? 'dark-mode' : '';
     };
 
+    return (
+        <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
+            <TitleBar
+                isMaximized={isMaximized}
+                handleMinimize={handleMinimize}
+                handleMaximizeRestore={handleMaximizeRestore}
+                handleClose={handleClose}
+            />
 
-  return (
-      <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
-          <header className="title-bar">
-              <div className="title">Bee 🐝</div>
-              <div className="window-controls">
-                  <button onClick={handleMinimize} title="Minimizar">_</button>
-                  <button onClick={handleMaximizeRestore} title={isMaximized ? 'Restaurar' : 'Maximizar'}>□</button>
-                  <button onClick={handleClose} title="Cerrar" className="close-btn">×</button>
-              </div>
-          </header>
+            <div className="content">
+                <h1>¡Bienvenido a Bee🐝™!</h1>
+                <p className="subtitle">La aplicación que finge ser útil mientras demuestra que sabes usar Electron</p>
 
-          <div className="content">
-              <h1>¡Bienvenido a Bee🐝™!</h1>
-              <p className="subtitle">La aplicación que finge ser útil mientras demuestra que sabes usar Electron</p>
+                <SystemInfoDisplay systemInfo={systemInfo} />
 
-              {systemInfo && (
-                  <div className="system-info">
-                      <h2>Información del Sistema:</h2>
-                      <p>Plataforma: <strong>{systemInfo.platform}</strong> (porque la portabilidad es para presumir)</p>
-                      <p>Arquitectura: <strong>{systemInfo.arch}</strong> (¿realmente importa?)</p>
-                      <p>CPUs: <strong>{systemInfo.cpus}</strong> (de los cuales Electron usa... todos)</p>
-                      <p>Memoria: <strong>{Math.round(systemInfo.memory / 1024 / 1024)}</strong> MB (prepárate para verla desaparecer)</p>
-                      <p>Versión de Electron: <strong>{systemInfo.electronVersion}</strong> (actualiza cada semana para mantenerte ocupado)</p>
-                  </div>
-              )}
+                <InteractiveSection
+                    counter={counter}
+                    setCounter={setCounter}
+                    darkMode={darkMode}
+                    toggleDarkMode={toggleDarkMode}
+                    openDevTools={openDevTools}
+                />
 
-              <div className="interactive-section">
-                  <h2>Elementos Interactivos Totalmente Innecesarios:</h2>
+                <div className="electron-joke">
+                    <h3>¿Por qué usar Electron?</h3>
+                    <p>Porque nada dice "soy un desarrollador moderno" como usar 300MB de RAM para mostrar un "Hola Mundo"</p>
+                </div>
+            </div>
 
-                  <div className="counter-section">
-                      <p>Contador inútil: {counter}</p>
-                      <button onClick={() => setCounter(counter + 1)}>Incrementar</button>
-                      <button onClick={() => setCounter(0)}>Reiniciar</button>
-                  </div>
-
-                  <div className="theme-section">
-                      <button onClick={toggleDarkMode}>
-                          {darkMode ? "Cambiar a Modo Claro" : "Cambiar a Modo Oscuro"}
-                      </button>
-                      <p className="theme-joke">Porque no eres un verdadero desarrollador sin un toggle de modo oscuro</p>
-                  </div>
-
-                  <div className="dev-tools">
-                      <button onClick={openDevTools}>Abrir DevTools</button>
-                      <p className="dev-joke">Para fingir que estás depurando algo importante</p>
-                  </div>
-              </div>
-
-              <div className="electron-joke">
-                  <h3>¿Por qué usar Electron?</h3>
-                  <p>Porque nada dice "soy un desarrollador moderno" como usar 300MB de RAM para mostrar un "Hola Mundo"</p>
-              </div>
-          </div>
-
-          <footer>
-              <p>Hecho con <span>❤️</span> y aproximadamente 1.5GB de node_modules</p>
-          </footer>
-      </div>
-  )
+            <AppFooter />
+        </div>
+    );
 }
 
-export default App
+export default App;
