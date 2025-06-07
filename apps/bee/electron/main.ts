@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
+import os from 'node:os'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
@@ -26,6 +27,38 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 
 let win: BrowserWindow | null
 
+ipcMain.on('get-system-info', (event) => {
+  event.reply('system-info-reply', {
+    platform: os.platform(),
+    arch: os.arch(),
+    cpus: os.cpus().length,
+    memory: os.totalmem(),
+    electronVersion: process.versions.electron,
+  })
+})
+
+ipcMain.on('window-control', (_event, action: string) => {
+  if (!win) return
+  switch (action) {
+    case 'minimize':
+      win.minimize()
+      break
+    case 'maximize':
+      win.maximize()
+      break
+    case 'restore':
+      win.restore()
+      break
+    case 'close':
+      win.close()
+      break
+  }
+})
+
+ipcMain.on('open-dev-tools', () => {
+  win?.webContents.openDevTools({ mode: 'detach' })
+})
+
 function createWindow() {
   win = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
@@ -38,6 +71,9 @@ function createWindow() {
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString())
   })
+
+  win.on('maximize', () => win?.webContents.send('window-state-change', true))
+  win.on('unmaximize', () => win?.webContents.send('window-state-change', false))
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
